@@ -26,7 +26,19 @@ app.use(bodyParser.json());
 
 
 var router = express.Router();
-router.get('/hello', function(req, res) {
+router.get('/airlines', function(req, res) {
+    console.log('start searching all airlines');
+    
+    
+    
+    res.end();
+    
+});
+router.get('/search', function(req, res) {
+    console.log(req.query.from);
+    
+    
+    
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 app.use('/api', router);//prefix router
@@ -36,5 +48,6 @@ app.get('/',function(req,res){
     });
 
 //app.use('/', express.static(__dirname + '/app/html'));
-app.listen(3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
 console.log("Running at Port 3000");

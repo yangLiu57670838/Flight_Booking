@@ -48,6 +48,6 @@ app.get('/',function(req,res){
     });
 
 //app.use('/', express.static(__dirname + '/app/html'));
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 8080;
 app.listen(port);
-console.log("Running at Port 4000");
+console.log("Running at Port 8080");

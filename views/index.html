@@ -39,13 +39,39 @@
                             url: "/api/airlines",
                             cache: false,
                             success: function(data) {
+                                console.log(data);
+                                console.log(data[0].code);
                                 
                                 $.ajax({
                                     type: "GET",
+                                    url: "/api/airports",
+                                    data: {
+                                        city: from
+                                        },
+                                        contentType: 'application/json',
+                                        cache: false,
+                                        success: function(data) {
+                                        console.log(data);
+                                        var fromAirportCode = data;
+                                            
+                                  $.ajax({
+                                    type: "GET",
+                                    url: "/api/airports",
+                                    data: {
+                                        city: to
+                                        },
+                                        contentType: 'application/json',
+                                        cache: false,
+                                        success: function(data) {
+                                        console.log(data);
+                                        var toAirportCode = data;
+                                                   
+                                  $.ajax({
+                                    type: "GET",
                                     url: "/api/search",
                                     data: {
-                                        from: from,
-                                        to: to,
+                                        fromAirportCode: fromAirportCode,
+                                        toAirportCode: toAirportCode,
                                         date: date
                                         },
                                         contentType: 'application/json',
@@ -53,6 +79,11 @@
                                         success: function(data) {
                                         console.log('success');
                                         console.log(JSON.stringify(data));
+                                    }
+                                });
+                                    }
+                                });  
+                                            
                                     }
                                 });    
                             }
@@ -72,7 +103,6 @@
                 <div class="input-group col-md-4 col-xs-12 floatbox">
                     <select class="selectpicker search-query form-control" data-live-search="true" title="Where are you leaving from?" id="from">
                         <optgroup label="A">
-                            <option data-tokens="adelaide" data-subtext="ADL">Adelaide</option>
                         <option data-tokens="albury" data-subtext="ABX">Albury</option>
                         <option data-tokens="ayers rock" data-subtext="AYQ">Ayers Rock</option>
                         </optgroup>
@@ -113,7 +143,6 @@
                <div class="input-group col-md-4 col-xs-12 floatbox">
                     <select class="selectpicker search-query form-control" data-live-search="true" title="Where are going to?" id="to">
                         <optgroup label="A">
-                        <option data-tokens="adelaide" data-subtext="ADL">Adelaide</option>
                         <option data-tokens="albury" data-subtext="ABX">Albury</option>
                         <option data-tokens="ayers rock" data-subtext="AYQ">Ayers Rock</option>
                         </optgroup>

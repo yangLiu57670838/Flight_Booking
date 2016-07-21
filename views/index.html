@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script charset="utf-8" src="../assets/js/bootstrap.js"></script>
     <script charset="utf-8" src="../assets/js/moment.js"></script>
+    <script charset="utf-8" src="../assets/js/spin.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>   
     <script>
     $( function() {
@@ -34,6 +35,32 @@
                     if (from == '' || to == '' || date == '') {
                        alert("Please Fill All Search Fields");
                     } else {
+                      //loading spin start
+                        var opts = {
+                        lines: 13 
+                        , length: 28 
+                        , width: 14 
+                        , radius: 42 
+                        , scale: 1 
+                        , corners: 1
+                        , color: '#000' 
+                        , opacity: 0.25 
+                        , rotate: 0 
+                        , direction: 1 
+                        , speed: 1 
+                        , trail: 60 
+                        , fps: 20 
+                        , zIndex: 2e9 
+                        , className: 'spinner' 
+                        , top: '50%' 
+                        , left: '50%' 
+                        , shadow: false 
+                        , hwaccel: false 
+                        , position: 'absolute' 
+                        }
+                        var target = document.getElementById('spin')
+                        var spinner = new Spinner(opts).spin(target); 
+                        $(target).data('spinner', spinner);
                         $.ajax({
                             type: "GET",
                             url: "/api/airlines",
@@ -88,9 +115,14 @@
                                                     }
                                                 });
                                                 
-                                            }
-                                            console.log('final', finalFlightsArray);
-                                            console.log(finalFlightsArray.length);
+                                            }                                  
+                            //waiting for the data finish loading
+                            setTimeout(
+                                function() {
+                                console.log('final length', finalFlightsArray.length);
+                                $('#spin').data('spinner').stop();
+                            }, 5000);
+                                            
                                     }
                                 });  
                                             
@@ -203,8 +235,10 @@
           <div class="col-md-4 col-xs-12 floatbox btn-group btn-group-lg">  
             <button type="button" class="btn btn-danger" id="search">Search Flights</button>
             </div>
-    </div>        
-</div>
+    </div> 
+        <div id="spin"></div>
+        
+    </div>
 
 
     

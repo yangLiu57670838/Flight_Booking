@@ -6,6 +6,7 @@ var express = require("express"),
     sys = require('util'),
     fs = require('fs'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     fspath = require('path');
 
 global.app = express();
@@ -62,9 +63,169 @@ router.get('/airports', function(req, res) {
     });   
 });
 
-router.get('/search', function(req, res) {
-    console.log(req.query.date);
-      
+router.get('/flight_search/SU', function(req, res) {
+    console.log('starting search for Aeroflot airline at', req.query.date);
+    var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    console.log(date1 + date2 + date3 + date4 + date5);
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'SU') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
+    
+});
+
+router.get('/flight_search/MU', function(req, res) {
+    console.log('starting search for China Eastern airline at', req.query.date);
+    var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'MU') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
+});
+
+router.get('/flight_search/EK', function(req, res) {
+    console.log('starting search for Emirates airline', req.query.date);
+    var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'EK') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
+});
+
+router.get('/flight_search/KE', function(req, res) {
+    console.log('starting search for Korean Airlines airline', req.query.date);
+    var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'KE') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
+});
+
+router.get('/flight_search/QF', function(req, res) {
+   console.log('starting search for Qantas airline', req.query.date);
+   var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'QF') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
+});
+
+router.get('/flight_search/SQ', function(req, res) {
+    console.log('starting search for Singapore airline', req.query.date);
+    var date3 = moment(req.query.date).format('YYYY-MM-DD');
+    var date1 = moment(req.query.date).subtract(2, 'days').format('YYYY-MM-DD');
+    var date2 = moment(req.query.date).subtract(1, 'days').format('YYYY-MM-DD');
+    var date4 = moment(req.query.date).add(1, 'days').format('YYYY-MM-DD');
+    var date5 = moment(req.query.date).add(2, 'days').format('YYYY-MM-DD');
+    console.log(date1 + date2 + date3 + date4 + date5);
+    var flights = require('./models/flights');
+    flights.find({}, function(err, flights) {
+        if (err) return console.error(err);
+        
+        console.log(flights[0].airline[0].code);
+        var resultFlights = [];
+        for (i = 0; i < flights.length; i++)
+            {
+                var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
+                
+                if ((flights[i].airline[0].code == 'SQ') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
+                    {
+                        resultFlights.push(flights[i]);
+                    }
+            }
+        console.log(resultFlights.length);
+        res.json(resultFlights);
+    });
 });
 
 app.use('/api', router);//prefix router

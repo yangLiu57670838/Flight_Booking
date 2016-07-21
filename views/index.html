@@ -19,9 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>   
     <script>
     $( function() {
-        $( "#datetimepicker1" ).datepicker();
+        $( "#datetimepicker1" ).datepicker({ dateFormat: 'yy-mm-dd' });
     } );
-    </script> 
+    </script>  
     <script type="text/javascript">
             $(function(){				
                 $('#search').click(function(e){
@@ -40,7 +40,7 @@
                             cache: false,
                             success: function(data) {
                                 console.log(data);
-                                console.log(data[0].code);
+                                var airlines = data;
                                 
                                 $.ajax({
                                     type: "GET",
@@ -65,22 +65,32 @@
                                         success: function(data) {
                                         console.log(data);
                                         var toAirportCode = data;
-                                                   
-                                  $.ajax({
-                                    type: "GET",
-                                    url: "/api/search",
-                                    data: {
-                                        fromAirportCode: fromAirportCode,
-                                        toAirportCode: toAirportCode,
-                                        date: date
-                                        },
-                                        contentType: 'application/json',
-                                        cache: false,
-                                        success: function(data) {
-                                        console.log('success');
-                                        console.log(JSON.stringify(data));
-                                    }
-                                });
+                                        var finalFlightsArray = [];
+                                        //call search api in a loop for each airline
+                                        for (i = 0; i < airlines.length; i++)
+                                            {
+                                                console.log(airlines[i].code);
+                                                
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: "/api/flight_search/" + airlines[i].code,
+                                                    data: {
+                                                        fromAirportCode: fromAirportCode,
+                                                        toAirportCode: toAirportCode,
+                                                        date: date
+                                                        },
+                                                    contentType: 'application/json',
+                                                    cache: false,
+                                                    success: function(data) {
+                                                        console.log(data);
+//                                                        console.log(JSON.stringify(data));
+                                                       finalFlightsArray = finalFlightsArray.concat(data); 
+                                                    }
+                                                });
+                                                
+                                            }
+                                            console.log('final', finalFlightsArray);
+                                            console.log(finalFlightsArray.length);
                                     }
                                 });  
                                             

@@ -12,12 +12,15 @@
     <link rel="stylesheet" href="../assets/css/jquery-ui.css">
     <link href="../assets/css/main.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script charset="utf-8" src="../assets/js/bootstrap.js"></script>
     <script charset="utf-8" src="../assets/js/moment.js"></script>
     <script charset="utf-8" src="../assets/js/spin.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>  
     <script>
     $( function() {
         $( "#datetimepicker1" ).datepicker({ dateFormat: 'yy-mm-dd' });
@@ -61,6 +64,10 @@
                         var target = document.getElementById('spin')
                         var spinner = new Spinner(opts).spin(target); 
                         $(target).data('spinner', spinner);
+                        //clean last table data
+                        if ( $.fn.DataTable.isDataTable( '#resultTable' ) ) {
+                            $("#resultTable").dataTable().fnDestroy();
+                        } 
                         $.ajax({
                             type: "GET",
                             url: "/api/airlines",
@@ -116,12 +123,36 @@
                                                 });
                                                 
                                             }                                  
-                            //waiting for the data finish loading
-                            setTimeout(
-                                function() {
-                                console.log('final length', finalFlightsArray.length);
-                                $('#spin').data('spinner').stop();
-                            }, 5000);
+                //waiting for the data finish loading
+                setTimeout(
+                    function() {
+                    console.log(finalFlightsArray.length);
+                    //collect table data
+                    var dataSet = [];
+                    for (j = 0; j < finalFlightsArray.length; j++)
+                    {
+                        var onerow = [];
+                        onerow.push(finalFlightsArray[j].airline[0].name);
+                        onerow.push(finalFlightsArray[j].start[0].dateTime);
+                        onerow.push(finalFlightsArray[j].price);
+                        var formatDuring = finalFlightsArray[j].durationMin + ' mins';
+                        onerow.push(formatDuring);
+                        dataSet.push(onerow);
+                    }
+                    console.log('final table data', dataSet);               
+                    //create datatable
+                        $('#resultTable').DataTable( {
+                        data: dataSet,
+                        columns: [
+                                { title: "Airline" },
+                                { title: "Flight Time" },
+                                { title: "Price" },
+                                { title: "During" }
+                            ]   
+                        });
+               
+                    $('#spin').data('spinner').stop();
+                }, 5000);
                                             
                                     }
                                 });  
@@ -237,6 +268,8 @@
             </div>
     </div> 
         <div id="spin"></div>
+        <br><br><br>
+        <table id="resultTable" class="display" width="100%"></table>
         
     </div>
 

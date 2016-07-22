@@ -80,9 +80,11 @@ router.get('/flight_search/SU', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'SU') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        //change flight time format first
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
@@ -108,9 +110,10 @@ router.get('/flight_search/MU', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'MU') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
@@ -135,9 +138,10 @@ router.get('/flight_search/EK', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'EK') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
@@ -162,9 +166,10 @@ router.get('/flight_search/KE', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'KE') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
@@ -189,9 +194,10 @@ router.get('/flight_search/QF', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'QF') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
@@ -217,9 +223,10 @@ router.get('/flight_search/SQ', function(req, res) {
         for (i = 0; i < flights.length; i++)
             {
                 var nnn = moment(flights[i].start[0].dateTime).format('YYYY-MM-DD');
-                
+                var n =  moment(flights[i].start[0].dateTime).format('YYYY-MM-DD, h:mm:ss a');
                 if ((flights[i].airline[0].code == 'SQ') && (flights[i].start[0].airportCode == req.query.fromAirportCode) && (flights[i].finish[0].airportCode == req.query.toAirportCode) && ((nnn == date1) || (nnn == date2) || (nnn == date3) || (nnn == date4) || (nnn == date5)))
                     {
+                        flights[i].start[0].dateTime = n;
                         resultFlights.push(flights[i]);
                     }
             }
